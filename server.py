@@ -18,7 +18,7 @@ class IRCServer(object):
 		s_fd = socket.socket(AF_INET, SOCK_STREAM)
 		s_fd.bind((self.host, self.port))
 		s_fd.listen(self.max_connections)
-		print("IRC Server listening on port 1238")
+		print("IRC Server listening on port {}".format(self.port))
 
 		while True:
 			conn, addr = s_fd.accept()
@@ -55,8 +55,13 @@ class IRCServer(object):
 		return client_info
 
 
-def main(args):
-	irc_server = IRCServer("192.168.0.100", 1238)
+def main(argv):
+	host = "192.168.0.100"
+	port = 1238
+	if len(argv) > 2:
+		host, port = argv[1], argv[2]
+
+	irc_server = IRCServer(host, int(port))
 	irc_server.start_server()
 
 

@@ -30,10 +30,13 @@ class IRCClient(object):
 		print(data)
 
 
-def main(name, nickname):
-	print("{}:{}".format(name, nickname))
-	irc_client = IRCClient("192.168.0.100", 1238, name, nickname)
+def main(name, nickname, host, port):
+	irc_client = IRCClient(host, int(port), name, nickname)
 	irc_client.start_client()
 
 if __name__ == '__main__':
-	main(sys.argv[1], sys.argv[2])
+	if len(sys.argv) < 5:
+		print("Usage: python client.py <name> <nickname> <host> <port>")
+		sys.exit()
+
+	main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
