@@ -3,6 +3,7 @@ import threading
 import sys
 from socket import AF_INET, SOCK_STREAM
 from data import ClientInfo, ChannelInfo
+import time
 
 DEFAULT_MAX_CONNECTIONS = 3
 
@@ -38,6 +39,8 @@ class IRCServer(object):
 					self.server_data[channel_name] = {}
 				self.server_data[channel_name][client_info.nickname] = client_info
 				conn.sendall("{} joined {} successfully!".format(client_info.nickname, channel_name))
+				# Sending dummy message to all members of client about joining of the group
+				#conn.sendall("Client joined the group PZK: {}".format(client_info.nickname))
 
 			if not data:
 				break
@@ -56,7 +59,7 @@ class IRCServer(object):
 
 
 def main(argv):
-	host = "192.168.0.100"
+	host = "192.168.0.109"
 	port = 1238
 	if len(argv) > 2:
 		host, port = argv[1], argv[2]
