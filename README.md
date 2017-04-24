@@ -1,6 +1,7 @@
 # mirc
 
 A simple IRC client/server library
+Linux: Ubuntu 14.04
 
 Features to be supported:
 1. Channel/Group creation
