@@ -7,3 +7,5 @@ Features to be supported:
 2. Message sending to channel
 3. Private message sending
 
+Comments
+1. Add timeout in connect
