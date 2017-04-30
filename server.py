@@ -6,6 +6,7 @@ from data import ClientInfo, ChannelInfo
 import time
 
 DEFAULT_MAX_CONNECTIONS = 3
+all_clients = {}
 
 class IRCServer(object):
 	def __init__(self, host, port):
@@ -32,9 +33,24 @@ class IRCServer(object):
 		while True:
 			data = conn.recv(4096)
 			print("CLIENT: {}".format(data))
+			
+			if 'MSG' in data:
+				_, channel_name, msg = data.split(" ")
+				#print(all_clients)
+				if not all_clients.has_key(channel_name):
+					continue
+
+				for client in all_clients[channel_name]:
+					client.sendall("CHANNEL MESSAGE: {}".format(msg))
 
 			if 'JOIN' in data:
 				_, channel_name = data.split(" ")
+				if all_clients.has_key(channel_name):
+					all_clients[channel_name].append(conn)
+				else:
+					all_clients[channel_name] = []
+					all_clients[channel_name].append(conn)
+
 				if not channel_name in self.server_data.keys():
 					self.server_data[channel_name] = {}
 				self.server_data[channel_name][client_info.nickname] = client_info
@@ -59,7 +75,7 @@ class IRCServer(object):
 
 
 def main(argv):
-	host = "192.168.0.109"
+	host = "192.168.0.106"
 	port = 1238
 	if len(argv) > 2:
 		host, port = argv[1], argv[2]

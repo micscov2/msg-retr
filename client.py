@@ -19,14 +19,16 @@ class IRCClient(object):
 		threading.Thread(target=self.listen_for_server_input, args=(s_fd, )).start()
 		# To allow proper printing of description on console
 		time.sleep(2)
-
+		first_time = True
 		while True:
 			data = raw_input("Send something to server: ")
 			s_fd.sendall(data)
-			data = s_fd.recv(4096)
-			if data in [None, ""]:
-				break
-			print("{}\n".format(data))
+			#if first_time:
+			#	print("Recv data from server")
+			#	data = s_fd.recv(4096)
+			#	print("{}\n".format(data))
+			#	print("Response recv: from server")
+			#first_time = False
 
 		s_fd.close()
 
