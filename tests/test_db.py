@@ -7,7 +7,7 @@ class ChannelInfo(Document):
 	topic = me.StringField(required=True)
 	members = me.ListField(me.StringField(required=True))
 
-channel_info = ChannelInfo(topic="Current", members=["Parvez", "Mukund"])
+channel_info = ChannelInfo(topic="Current", members=["Monkey", "Luffy"])
 channel_info.save()
 
 # Sample output from above code

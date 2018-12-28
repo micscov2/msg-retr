@@ -1,4 +1,4 @@
-iSimple IRC Server
+Simple IRC Server
 
 Code messages has been replaced with text messages, for example:
 0 - JOIN
